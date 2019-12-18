@@ -19,4 +19,9 @@ public class MyService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
+
+    public int createLottery(){
+        return (int)(Math.random()*49+1);
+    }
+
 }

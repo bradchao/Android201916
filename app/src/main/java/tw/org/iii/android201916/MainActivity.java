@@ -8,8 +8,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView tv;
     private MyService myService;
     private boolean isBind;
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tv = findViewById(R.id.tv);
     }
 
     @Override
@@ -46,5 +50,10 @@ public class MainActivity extends AppCompatActivity {
         if (isBind) {
             unbindService(serviceConnection);
         }
+    }
+
+    public void test1(View view) {
+        int lottery = myService.createLottery();
+        tv.setText("" + lottery);
     }
 }
