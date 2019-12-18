@@ -11,15 +11,18 @@ import android.os.IBinder;
 
 public class MainActivity extends AppCompatActivity {
     private MyService myService;
+    private boolean isBind;
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
-
+            MyService.LocalBinder mBinder = (MyService.LocalBinder)binder;
+            myService = mBinder.getService();
+            isBind = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-
+            isBind = false;
         }
     };
 
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        unbindService(serviceConnection);
+        if (isBind) {
+            unbindService(serviceConnection);
+        }
     }
 }
